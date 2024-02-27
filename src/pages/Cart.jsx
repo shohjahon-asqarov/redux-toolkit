@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { removeCart } from '../store/slices/cartSlice'
+import { decrement, increment, removeCart } from '../store/slices/cartSlice'
 
 const Cart = () => {
     const cartData = useSelector((store) => store.cartSlice.data)
@@ -15,7 +15,11 @@ const Cart = () => {
                                 <img className='w-full h-[220px]' src={product.image} alt={product.title} />
                                 <div className='py-3 space-y-3'>
                                     <h3>{product.title.slice(0, 20)}</h3>
-                                    <p>{product.price}$</p>
+                                    <div className="flex justify-between">
+                                        <button onClick={()=> dispatch(increment(product))} className='bg-gray-300 py-2 px-3 rounded-md'>-</button>
+                                        <span className='bg-gray-300 py-2 px-3 rounded-md text-xl'>{product.count}</span>
+                                        <button onClick={()=> dispatch(decrement(product))} className='bg-gray-300 py-2 px-3 rounded-md'>+</button>
+                                    </div>
                                     <button onClick={() => dispatch(removeCart(product.id))} className='bg-red-600 text-white w-full py-3 rounded-md'>Add to cart</button>
                                 </div>
                             </li>

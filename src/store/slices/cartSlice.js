@@ -9,12 +9,30 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addCart: (state, action) => {
-            state.data.push(action.payload)
+            let obj = {
+                count: 1,
+                ...action.payload
+            }
+            state.data.push(obj)
         },
         removeCart: (state, action) => {
             state.data = state.data.filter(product => product.id !== action.payload)
+        },
+        increment: (state, action) => {
+            state.data.forEach(i => {
+                if (i.id === action.payload.id) {
+                    i.count--
+                }
+            })
+        },
+        decrement: (state, action) => {
+            state.data.forEach(i => {
+                if (i.id === action.payload.id) {
+                    i.count++
+                }
+            })
         }
     }
 })
-export const { addCart, removeCart } = cartSlice.actions;
+export const { addCart, removeCart , increment , decrement } = cartSlice.actions;
 export default cartSlice.reducer;
